@@ -60,7 +60,7 @@ VALUES(?,?,?,?,?,?,?)"
         echo "
         <script>
         alert('Successfully Login..!');
-        window.location.href='/qtalk';
+        window.location.href='../index.php';
         </script>
         ";
     }
@@ -73,4 +73,6 @@ VALUES(?,?,?,?,?,?,?)"
     window.location.href='/qtalk';
     </script>
     ";
+} else {
+    // nothing  
 }

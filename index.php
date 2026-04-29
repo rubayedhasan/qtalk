@@ -28,9 +28,13 @@
         include("./client/login.php");
     } elseif (isset($_GET["signup"]) && !$user) {
         include("./client/signup.php");
+    } elseif (isset($_GET["ask"])) {
+        include("./client/ask-question.php");
     } else {
         // noting 
     }
+
+
     if (isset($_SESSION['success'])) {
         echo "
             <script>
