@@ -5,6 +5,11 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
+a {
+  color: #000;
+  text-decoration: none;
+}
+
 /* Navbar styles  */
 .navbar-brand h4 {
   display: inline-flex;

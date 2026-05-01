@@ -30,8 +30,14 @@
         include("./client/signup.php");
     } elseif (isset($_GET["ask"])) {
         include("./client/ask-question.php");
+    } elseif (isset($_GET['qst_id'])) {
+        $question_id = $_GET['qst_id'];
+        include('./client/questioin-detail.php');
+    } elseif (isset($_GET['category_id'])) {
+        $cat_id = $_GET['category_id'];
+        include("./client/question-display.php");
     } else {
-        // noting 
+        include("./client/question-display.php");
     }
 
 

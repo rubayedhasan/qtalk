@@ -23,14 +23,15 @@ VALUES(?,?,?,?,?,?,?)"
 
     $dbCupon = $user->execute([$setUserFirstName, $setUserLastName, $setUserName, $setUserEmailAddress, $setUserPassword, $setUserAddress, $setUserZipCode]);
 
+    $user_id = $user->insert_id;
     if ($dbCupon) {
         // way-1:: redirect and show alert 
-        echo "
-                <script>alert('Your Signup Process is Successful.');
-                window.location.href='../index.php';
-                </script>
-        ";
-        $_SESSION["user"] = ["userName" => $setUserName, "email" => $setUserEmailAddress];
+        // echo "
+        //         <script>alert('Your Signup Process is Successful.');
+        //         window.location.href='../index.php';
+        //         </script>
+        // ";
+        $_SESSION["user"] = ["userName" => $setUserName, "email" => $setUserEmailAddress, "user_id" => $user_id];
 
         // way-2 redirect and show alert 
         $_SESSION['success'] = "signup successful.";
@@ -45,6 +46,7 @@ VALUES(?,?,?,?,?,?,?)"
     $userEmail = $_POST["userEmail"];
     $userPassword = $_POST["userPassword"];
     $userName = null;
+    $user_id = null;
 
     $query = "SELECT * FROM users WHERE email = '$userEmail' and password ='$userPassword'";
     $loginResult = $dbConnect->query($query);
@@ -52,10 +54,11 @@ VALUES(?,?,?,?,?,?,?)"
     if ($loginResult->num_rows === 1) {
 
         foreach ($loginResult as $result) {
+            $user_id = $result["id"];
             $userName = $result["userName"];
         }
 
-        $_SESSION["user"] = ["userName" => $userName, "email" => $userEmail];
+        $_SESSION["user"] = ["userName" => $userName, "email" => $userEmail, "user_id" => $user_id];
 
         echo "
         <script>
@@ -64,7 +67,7 @@ VALUES(?,?,?,?,?,?,?)"
         </script>
         ";
     }
-} elseif ($_GET["logout"]) {
+} elseif (isset($_GET["logout"])) {
     session_unset();
     echo
     "
@@ -73,6 +76,42 @@ VALUES(?,?,?,?,?,?,?)"
     window.location.href='/qtalk';
     </script>
     ";
+} elseif (isset($_POST["ask-btn"])) {
+    $questionTitle = $_POST["title"];
+    $questionDescription = $_POST["description"];
+    $category_id = $_POST["category"];
+    $user_id = $_SESSION["user"]["user_id"];
+
+    $question = $dbConnect->prepare("INSERT INTO question_list (title, description, category_id, user_id) VALUES (?,?,?,?)");
+    $qstOutcome = $question->execute([$questionTitle, $questionDescription, $category_id, $user_id]);
+
+    if ($qstOutcome) {
+        echo "
+        <script>
+            alert('Your Question Added.');
+            window.location.href = '../index.php';
+        </script>
+        ";
+    } else {
+        echo "Somthing is Wrong............";
+    }
+} elseif (isset($_POST['questionAnswer'])) {
+    $question_answer = $_POST["questionAnswer"];
+    $question_id = $_POST["question_id"];
+    $user_id = $_SESSION["user"]["user_id"];
+
+    $insertAnswer = $dbConnect->prepare("INSERT INTO quention_answers(answer,question_id,user_id) VALUES(?,?,?)");
+    $answerOutcome = $insertAnswer->execute([$question_answer, $question_id, $user_id]);
+    if ($answerOutcome) {
+        echo "
+        <script>
+            //   alert('you answer is submitted.');
+              window.location.href='/qtalk/?qst_id=$question_id';
+        </script>
+        ";
+    } else {
+        echo "your Answer is Failed to submitted...";
+    }
 } else {
     // nothing  
 }

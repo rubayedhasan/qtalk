@@ -9,7 +9,7 @@
 
 <body>
     <main class="container mt-5">
-        <form class="row g-3" action="" method="post">
+        <form class="row g-3" action="./server/requests.php" method="post">
             <div class="col-12">
                 <label for="questionTitle" class="form-label">Question Title</label>
                 <input type="text" class="form-control" name="title" id="questionTitle" placeholder="Enter Your Question">
@@ -19,7 +19,7 @@
                 <textarea type="text" class="form-control" name="description" id="questionDescription" placeholder="Question Description" cols="30" rows="10"></textarea>
             </div>
             <div class="col-12">
-                <label for="questionCategory" class="form-label">Question Description</label>
+                <label for="questionCategory" class="form-label">Select Question Category</label>
                 <?php include("category.php"); ?>
             </div>
             </div>
