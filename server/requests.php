@@ -42,7 +42,7 @@ VALUES(?,?,?,?,?,?,?)"
 
         $_SESSION['success'] =  "Failed to Signup.";
     }
-} elseif (isset($_POST["login-btn"])) {
+} else if (isset($_POST["login-btn"])) {
     $userEmail = $_POST["userEmail"];
     $userPassword = $_POST["userPassword"];
     $userName = null;
@@ -67,7 +67,7 @@ VALUES(?,?,?,?,?,?,?)"
         </script>
         ";
     }
-} elseif (isset($_GET["logout"])) {
+} else if (isset($_GET["logout"])) {
     session_unset();
     echo
     "
@@ -76,7 +76,7 @@ VALUES(?,?,?,?,?,?,?)"
     window.location.href='/qtalk';
     </script>
     ";
-} elseif (isset($_POST["ask-btn"])) {
+} else if (isset($_POST["ask-btn"])) {
     $questionTitle = $_POST["title"];
     $questionDescription = $_POST["description"];
     $category_id = $_POST["category"];
@@ -95,7 +95,7 @@ VALUES(?,?,?,?,?,?,?)"
     } else {
         echo "Somthing is Wrong............";
     }
-} elseif (isset($_POST['questionAnswer'])) {
+} else if (isset($_POST['questionAnswer'])) {
     $question_answer = $_POST["questionAnswer"];
     $question_id = $_POST["question_id"];
     $user_id = $_SESSION["user"]["user_id"];
@@ -111,6 +111,21 @@ VALUES(?,?,?,?,?,?,?)"
         ";
     } else {
         echo "your Answer is Failed to submitted...";
+    }
+} else if (isset($_GET['delete'])) {
+    $qst_id = $_GET["delete"];
+
+    echo $qst_id;
+    $delete = $dbConnect->prepare("DELETE FROM question_list WHERE id = ?");
+    $deleteOutcome = $delete->execute([$qst_id]);
+
+    if ($deleteOutcome) {
+        echo "
+        <script> 
+        alert('Question has been removed.');
+        window.location.href='../index.php';
+        </script>
+        ";
     }
 } else {
     // nothing  

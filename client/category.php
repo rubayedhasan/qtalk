@@ -1,4 +1,4 @@
-<select class="form-select" name="category" id="questionCategory">
+<select class="form-select" name="category" id="questionCategory" required>
     <option value="">Select Question Category</option>
     <?php
     include("./db/dbConnect.php");

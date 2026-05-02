@@ -12,7 +12,7 @@
         <!-- section:: Navbar  -->
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="./index.php">
                     <h4>
                         <span><i class="fa-brands fa-earlybirds"></i></span>
                         <span>qTalk</span>
@@ -31,10 +31,14 @@
                         $user = $_SESSION["user"]["userName"] ?? null;
                         if ($user) { ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="./server/requests.php?logout=true">Logout</a>
+                                <a class="nav-link" href="./server/requests.php?logout=true">Logout(
+                                    <?php echo ucfirst($_SESSION["user"]["userName"]) ?>)</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="?ask=true">Ask Question</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="?user_id=<?php echo $_SESSION["user"]["user_id"] ?>">My Questions</a>
                             </li>
                         <?php } ?>
 
@@ -48,17 +52,12 @@
                                 <a class="nav-link" href="?signup=true">Signup</a>
                             </li>
                         <?php } ?>
-
-
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Category</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Latest Questions</a>
+                            <a class="nav-link" href="?latest=true">Latest Questions</a>
                         </li>
                     </ul>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                    <form class="d-flex" role="search" action="" method="">
+                        <input class="form-control me-2" type="search" name="search" id="search-box" placeholder="Search" aria-label="Search" />
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
                 </div>

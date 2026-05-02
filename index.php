@@ -26,15 +26,23 @@
     // conditional including 
     if (isset($_GET["login"]) && !$user) {
         include("./client/login.php");
-    } elseif (isset($_GET["signup"]) && !$user) {
+    } else if (isset($_GET["signup"]) && !$user) {
         include("./client/signup.php");
-    } elseif (isset($_GET["ask"])) {
+    } else if (isset($_GET["ask"])) {
         include("./client/ask-question.php");
-    } elseif (isset($_GET['qst_id'])) {
+    } else if (isset($_GET['qst_id'])) {
         $question_id = $_GET['qst_id'];
         include('./client/questioin-detail.php');
-    } elseif (isset($_GET['category_id'])) {
+    } else if (isset($_GET['category_id'])) {
         $cat_id = $_GET['category_id'];
+        include("./client/question-display.php");
+    } else if (isset($_GET['user_id'])) {
+        $user_id = $_GET['user_id'];
+        include("./client/question-display.php");
+    } else if (isset($_GET['latest'])) {
+        include("./client/question-display.php");
+    } else if (isset($_GET['search'])) {
+        $search_key = $_GET['search'];
         include("./client/question-display.php");
     } else {
         include("./client/question-display.php");

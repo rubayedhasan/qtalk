@@ -22,6 +22,8 @@
                         $question = $conn->query($query);
                         $question_arr = $question->fetch_assoc();
 
+                        $category_id = $question_arr["category_id"];
+
                         echo "
                         <h4 class='text-info mb-3'>
                              Question: $question_arr[title]
@@ -43,7 +45,24 @@
                 </div>
 
                 <!-- related question  -->
-                <div class="col-4"></div>
+                <div class="col-4">
+                    <h4 class="mb-4">Some Related Questions</h4>
+                    <?php
+                    $questionQuery = "SELECT * FROM question_list WHERE category_id = $category_id and id != $question_id";
+                    $questions = $conn->query($questionQuery);
+
+                    foreach ($questions as $question) {
+                        echo "
+                                <div class='card mb-3'>
+                                        <p class='card-body'>
+                                            <a href='?qst_id=$question[id]'>$question[title]</a>
+                                        </p>
+                                </div>
+                        ";
+                    }
+
+                    ?>
+                </div>
             </div>
         </section>
     </main>
